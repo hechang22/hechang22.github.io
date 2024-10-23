@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Introduction to Optimization 1 | A tiny home</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Introduction to Optimization 1</h1><a id="logo" href="/.">A tiny home</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/CV/"><i class="fa fa-file-pdf"> CV</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Introduction to Optimization 1</h1><div class="post-meta">2024-10-23<span> | </span><span class="category"><a href="/categories/%E7%BB%9F%E8%AE%A1/">统计</a></span></div><div class="post-content"><h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><h2 id="优化算法的目标和特性"><a href="#优化算法的目标和特性" class="headerlink" title="优化算法的目标和特性"></a>优化算法的目标和特性</h2><ol>
+<li><strong>鲁棒性（Robustness）</strong>：算法应该在其类别的广泛问题上表现良好，对于所有合理的起始点值都能有效。</li>
+<li><strong>效率（Efficiency）</strong>：算法不应需要过多的计算机时间或存储空间。</li>
+<li><strong>准确性（Accuracy）</strong>：算法应能够精确地识别解决方案，而不应过于敏感于数据中的错误或在计算机上实现算法时发生的算术舍入错误。</li>
+<li><strong>权衡（Tradeoffs）</strong>：在收敛速度与存储需求之间、鲁棒性与速度之间等的权衡是数值优化中的中心问题。</li>
+</ol>
+<h2 id="优化与方程求解的关系"><a href="#优化与方程求解的关系" class="headerlink" title="优化与方程求解的关系"></a>优化与方程求解的关系</h2><ol>
+<li><strong>方程求解转化为最小化问题</strong>：求解方程 ( f(x) &#x3D; 0 ) 可以转化为最小化问题 ( \min_{x} f(x)^T f(x) )。</li>
+<li><strong>最小化问题转化为方程求解</strong>：最小化可微函数 ( f(x) ) 可以转化为求解 ( f’(x) &#x3D; 0 )。</li>
+<li><strong>二次型函数的最小化</strong>：当 ( f(x) ) 是二次型 ( f(x) &#x3D; \frac{1}{2} x^T A x - b^T x + c ) 时，如果矩阵 ( A ) 是对称且正定的，那么 ( f(x) ) 可以通过解方程 ( Ax &#x3D; b ) 来最小化。</li>
+</ol>
+<h2 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h2><p>梯度是一个向量，其分量是函数 ( f(x) ) 对每个变量的偏导数。对于一个多变量函数 ( f(x) )，梯度表示为：<br>[ \nabla f(x) &#x3D; \left[ \frac{\partial}{\partial x_1} f(x), \frac{\partial}{\partial x_2} f(x), \ldots, \frac{\partial}{\partial x_n} f(x) \right] ]</p>
+<ol>
+<li><p>对于每一个点 ( x )，梯度指向函数 ( f(x) ) 增加最快的方向。</p>
+<ul>
+<li>当 ( \Delta x ) 沿着梯度的方向时，函数 ( f(x) ) 的变化可以近似为：<br> [ f(x + \Delta x) \approx f(x) + (\Delta x)^T \nabla f(x) ]</li>
+<li>如果 ( \Delta x ) 取为 ( c \nabla f(x) )，其中 ( c &gt; 0 )，那么 ( \Delta x ) 与等高线正交，这意味着在梯度方向上移动会使得函数值增加。</li>
+</ul>
+</li>
+<li><p>梯度的正交补方向是函数 ( f(x) ) 保持不变的方向，即等高线（contour lines）的方向。</p>
+</li>
+</ol>
+<h2 id="e-g-MLE"><a href="#e-g-MLE" class="headerlink" title="e.g. MLE"></a>e.g. MLE</h2><h3 id="MLE的具体例子"><a href="#MLE的具体例子" class="headerlink" title="MLE的具体例子"></a>MLE的具体例子</h3><ol>
+<li><strong>MLE的定义</strong>：MLE是通过最大化对数似然函数 ( l(\theta) ) 来估计参数向量 ( \theta ) 的方法。这里，( l(\theta) ) 是对数似然函数，( \theta ) 是参数向量。</li>
+<li><strong>Fisher得分方程</strong>：通常，MLE ( \hat{\theta} ) 是Fisher得分方程的解，即 ( l’(\theta) &#x3D; \frac{\partial}{\partial\theta} l(\theta) &#x3D; 0 )。</li>
+<li><strong>优化与非线性方程</strong>：寻找MLE相当于找到得分方程的根，这与解决非线性方程紧密相关。</li>
+</ol>
+<h3 id="轮廓MLE和集中MLE"><a href="#轮廓MLE和集中MLE" class="headerlink" title="轮廓MLE和集中MLE"></a>轮廓MLE和集中MLE</h3><ol>
+<li><strong>降维</strong>：在高维参数空间中，通过将参数 ( \theta ) 分为感兴趣参数 ( \theta_1 ) 和干扰参数 ( \theta_2 ) 来降低问题的维度。</li>
+<li><strong>轮廓MLE</strong>：首先固定 ( \theta_1 )，然后最大化 ( l(\theta_1, \theta_2) ) 来找到 ( \hat{\theta}_2(\theta_1) )，接着最大化 ( l(\theta_1, \hat{\theta}_2(\theta_1)) ) 来找到 ( \hat{\theta}_1 )。</li>
+<li><strong>回归示例</strong>：在回归分析中，如果 ( \beta_1 ) 和 ( \beta_2 ) 是参数，( X_1 ) 和 ( X_2 ) 是设计矩阵，可以通过投影矩阵 ( P_2 ) 来分离 ( \beta_1 ) 和 ( \beta_2 ) 的估计。</li>
+<li><strong>块松弛方法</strong>：如果 ( \hat{\theta}_1 ) 也可以容易地作为 ( \theta_2 ) 的函数获得，可以使用块松弛方法，交替更新 ( \beta_1 ) 和 ( \beta_2 ) 的估计。</li>
+</ol>
+<p>在处理高维参数时如何通过轮廓MLE和集中MLE来简化问题。<br>通过将参数分为感兴趣参数和干扰参数，可以更有效地进行参数估计。<br>此外，通过块松弛方法，可以交替更新参数估计，从而找到最优解。</p>
+<h3 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a>相关术语</h3><table>
+<thead>
+<tr>
+<th>术语</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数</td>
+<td>( \theta )，一个p维向量</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>( X )</td>
+</tr>
+<tr>
+<td>对数似然</td>
+<td>( l(\theta) &#x3D; \log P(X \mid \theta) )</td>
+</tr>
+<tr>
+<td>得分函数</td>
+<td>( s(\theta) &#x3D; l’(\theta) &#x3D; \left(\frac{\partial l}{\partial \theta_1}, \cdots, \frac{\partial l}{\partial \theta_p}\right)^T )</td>
+</tr>
+<tr>
+<td>海森矩阵</td>
+<td>( l’’(\theta) &#x3D; \left{\frac{\partial^2 l}{\partial \theta_i \partial \theta_j}\right}_{i, j&#x3D;1,\cdots, p} )</td>
+</tr>
+<tr>
+<td>费舍尔信息</td>
+<td>( I(\theta) &#x3D; -E[l’’(\theta)] &#x3D; E[J(\theta)] &#x3D; E\left[l’(\theta)(l’(\theta))^T\right] )</td>
+</tr>
+<tr>
+<td>观测信息</td>
+<td>( J(\hat{\theta}) &#x3D; -l’’(\hat{\theta}) )</td>
+</tr>
+<tr>
+<td>当 ( \theta^* ) 是局部最大值时</td>
+<td>( l’(\theta^*) &#x3D; 0 )，且 ( l’’(\theta^*) ) 是负定的</td>
+</tr>
+</tbody></table>
+<h2 id="迭代算法"><a href="#迭代算法" class="headerlink" title="迭代算法"></a>迭代算法</h2><p><strong>目标</strong>：通过连续逼近来求解问题。</p>
+<h3 id="三要素"><a href="#三要素" class="headerlink" title="三要素"></a>三要素</h3><ol>
+<li><strong>初始值</strong>：选择一个合理的初始猜测值，例如 ( x^{(0)} &#x3D; 1.6 )。</li>
+<li><strong>更新规则</strong>：从最近的值 ( x^{(t)} ) 产生一个改进的猜测 ( x^{(t+1)} )，其中 ( t &#x3D; 0, 1, 2, \ldots )。</li>
+<li><strong>停止条件</strong>：确定何时停止迭代。</li>
+</ol>
+<h3 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h3><h4 id="收敛准则"><a href="#收敛准则" class="headerlink" title="收敛准则"></a>收敛准则</h4><ol>
+<li><strong>绝对收敛准则</strong>：<ul>
+<li>停止条件：当 (\left|x^{(t+1)} - x^{(t)}\right| &lt; \varepsilon) 时停止迭代。</li>
+<li>其中，(\varepsilon) 是一个常数，用于表示可接受的误差范围。</li>
+</ul>
+</li>
+</ol>
+<p>数值尺度？</p>
+<ol start="2">
+<li><strong>相对收敛准则</strong>：<ul>
+<li>停止条件：当 (\frac{\left|x^{(t+1)} - x^{(t)}\right|}{\left|x^{(t)}\right|} &lt; \varepsilon) 时停止迭代。</li>
+<li>这个准则允许指定目标精度（例如，“在1%以内”），而无需考虑 (x) 的单位。</li>
+</ul>
+</li>
+</ol>
+<p>分母为0？</p>
+<ol start="3">
+<li><strong>另一种相对收敛监控方法</strong>：<ul>
+<li>停止条件：当 (\frac{\left|x^{(t+1)} - x^{(t)}\right|}{\left|x^{(t)}\right| + \varepsilon} &lt; \varepsilon) 时停止迭代。</li>
+</ul>
+</li>
+</ol>
+<p>这些准则帮助确定迭代过程何时足够接近解，从而可以停止迭代，节省计算资源。<br>绝对收敛准则关注迭代值之间的绝对差异，而相对收敛准则则关注这种差异相对于当前迭代值的大小，后者在处理不同量级的问题时更为灵活。</p>
+<h4 id="防治收敛失败"><a href="#防治收敛失败" class="headerlink" title="防治收敛失败"></a>防治收敛失败</h4><ol>
+<li><strong>固定迭代次数</strong>：无论是否收敛，都可以在进行N次迭代后停止。</li>
+<li><strong>收敛性监测</strong>：如果任何收敛度量在几次迭代后没有减少或出现循环，或者解决方案本身循环不满意，可以考虑停止。</li>
+<li><strong>避免劣化</strong>：如果程序似乎正在收敛到一个点，而该点的函数值 (f(x)) 比你已经找到的另一个值要差，也应该停止。</li>
+<li><strong>分散迭代资源</strong>：不要将所有可用的迭代都用于一次尝试！应该为多次较小的尝试分配时间，以预期可能的收敛失败、数据修正、多个起始值等情况。</li>
+</ol>
+<h3 id="收敛速度"><a href="#收敛速度" class="headerlink" title="收敛速度"></a>收敛速度</h3><h4 id="收敛阶数和收敛速度的定义"><a href="#收敛阶数和收敛速度的定义" class="headerlink" title="收敛阶数和收敛速度的定义"></a>收敛阶数和收敛速度的定义</h4><ul>
+<li><strong>定义</strong>：设 (\varepsilon^{(t)} \triangleq x^{(t)} - x^<em>)，如果序列 ({x^{(t)}}) 收敛到 (x^</em>)，并且满足以下条件，则称其具有收敛阶数 (\alpha) 和收敛速度 (c)：<br>[<br>\lim_{t \to \infty} \varepsilon^{(t)} &#x3D; 0 \quad \text{和} \quad \lim_{t \to \infty} \frac{|\varepsilon^{(t+1)}|}{|\varepsilon^{(t)}|^\alpha} &#x3D; c<br>]<br>其中 (c &gt; 0) 且 (\alpha \geq 1)。如果 (\alpha &gt; 1)，则 (c \in (0, \infty))；如果 (\alpha &#x3D; 1)，则 (c \in (0, 1))。</li>
+</ul>
+<h4 id="收敛速度的例子"><a href="#收敛速度的例子" class="headerlink" title="收敛速度的例子"></a>收敛速度的例子</h4><ul>
+<li><strong>线性收敛</strong>：设 (\gamma \in (0,1))，则 (\gamma^n) 线性收敛到零：<br>[<br>\lim_{n \to \infty} \gamma^n &#x3D; 0, \quad \frac{\gamma^{n+1}}{\gamma^n} &#x3D; \gamma, \quad \gamma^{n+1} &#x3D; O(\gamma^n)<br>]</li>
+<li><strong>超线性收敛</strong>：(\gamma^{n^2}) 超线性收敛到零：<br>[<br>\lim_{n \to \infty} \frac{\gamma^{(n+1)^2}}{\gamma^{n^2}} &#x3D; \lim_{n \to \infty} \gamma^{2n+1} &#x3D; 0, \quad \lim_{n \to \infty} \frac{\gamma^{(n+1)^2}}{(\gamma^{n^2})^2} &#x3D; \infty<br>]</li>
+<li><strong>二次收敛</strong>：(\gamma^{2^n}) 二次收敛到零：<br>[<br>\frac{\gamma^{2^{n+1}}}{(\gamma^{2^n})^2} &#x3D; 1<br>]</li>
+</ul>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag">统计</a></li></ul></div><div class="post-nav"><a class="next" href="/2024/09/14/Practice-of-Bioinfomatic-note-1/">Practice of Bioinfomatic HW1</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://hechang22.github.io"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="About"><img class="nofancybox" src="/img/ava.png"/></a><p>一只鼠。</p><a class="info-icon" href="mailto:he-c22@mails.tsinghua.edu.cn" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hechang22" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A5%E8%AE%B0/">日记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E4%BF%A1/">生信</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%9F%E8%AE%A1/">统计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/GPT/" style="font-size: 15px;">GPT</a> <a href="/tags/%E4%BD%9C%E4%B8%9A/" style="font-size: 15px;">作业</a> <a href="/tags/%E7%94%9F%E4%BF%A1/" style="font-size: 15px;">生信</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 15px;">笔记</a> <a href="/tags/%E7%BB%9F%E8%AE%A1/" style="font-size: 15px;">统计</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2024/10/23/%E4%BC%98%E5%8C%96%E5%85%A5%E9%97%A81/">Introduction to Optimization 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/09/14/Practice-of-Bioinfomatic-note-1/">Practice of Bioinfomatic HW1</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/03/18/Github%20Copilot+ChatGPT-Next-Web%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">Github Copilot+ChatGPT-Next-Web搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/10/22/Elementary-python-for-R-user/">给R用户的基础Python教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/10/14/%E6%97%A5%E8%AE%B0-2%EF%BC%9A7%E6%9C%88/">日记-2：7月</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/09/14/%E6%97%A5%E8%AE%B0-3%EF%BC%9A9%E6%9C%88/">日记-3：9月</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/31/%E3%80%8A%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6%EF%BC%9A%E5%AF%BC%E8%AE%BA%E4%B8%8E%E6%96%B9%E6%B3%95%E3%80%8B%E7%AC%94%E8%AE%B0/">《生物信息学：导论与方法》笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/29/markdown%E8%AF%AD%E6%B3%95&%E4%B8%80%E4%BA%9Bmemo/">markdown语法&一些memo</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/01/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0%E2%80%94%E6%8C%87%E9%92%88/">程序设计基础复习—指针</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/29/%E6%97%A5%E8%AE%B0-1%EF%BC%9A6%E6%9C%88/">日记-1：6月</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2024 <a href="/." rel="nofollow">A tiny home.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>
