@@ -4,7 +4,7 @@ date: 2024-03-18
 tags:
   - GPT
 categories: 计算机
-description:
+description: update 9.2024: 失效，github禁止使用copilot-gpt4-service
 ---
 ### 服务器：阿里云
 

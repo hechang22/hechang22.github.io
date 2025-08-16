@@ -1,5 +1,5 @@
 ---
-title: markdown语法&一些memo
+title: memo for Blog
 date: 2023-07-29
 tags: [markdown]
 categories: 计算机

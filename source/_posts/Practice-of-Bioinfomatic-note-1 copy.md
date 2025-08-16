@@ -1,9 +1,10 @@
 ---
-title: Practice of Bioinfomatic HW1
+title: Bioinfomatic in Action HW1
 date: 2024-09-14 15:03:45
 tags:
   - 作业
   - 生信
+description: 课程作业
 ---
 
 ### 笔记

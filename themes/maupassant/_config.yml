@@ -103,17 +103,20 @@ icp: ## China mainland only, show icp info on the bottom.
 
 menu:
   - page: home
-    directory: .
+    directory: about/
     icon: fa-home
   - page: archive
     directory: archives/
     icon: fa-archive
-  - page: about
-    directory: about/
+  - page: blog
+    directory: .
     icon: fa-user
-  - page: rss
-    directory: atom.xml
-    icon: fa-rss
+  - page: CV
+    directory: CV/
+    icon: fa-file-pdf
+# - page: rss
+#   directory: atom.xml
+#   icon: fa-rss
 
 widgets: ## Seven widgets in sidebar provided: search, info, category, tag, recent_posts, recent_comments and links.
   - search
@@ -121,12 +124,13 @@ widgets: ## Seven widgets in sidebar provided: search, info, category, tag, rece
   - category
   - tag
   - recent_posts
-  - recent_comments
-  - links
+#  - recent_comments
+#  - links
 
 info:
   avatar: /img/ava.png
-  discription: 一只鼠。
+  author: Chang He
+  discription: Undergraduate @ Tsinghua University, Visiting student @ UChicago
   outlinkitem:
     #- name: bilibili
     #  outlink: https://space.bilibili.com/122696509

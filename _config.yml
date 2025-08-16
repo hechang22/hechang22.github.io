@@ -102,6 +102,12 @@ theme: maupassant
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/hechang22/hechang22.github.io.git
+  repo: https://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@github.com/hechang22/hechang22.github.io.git
   branch: master
   # message: Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }})
+
+# Security
+##
+encrypt:
+    enable: true
+##
